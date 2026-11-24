@@ -1,0 +1,18 @@
+node_modules/
+client/dist/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+server/uploads/*
+!server/uploads/.gitkeep
+*.db
+*.db-journal
+# Local env overrides
+client/.env.local
+.vercel
+.env*

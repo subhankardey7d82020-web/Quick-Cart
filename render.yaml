@@ -1,0 +1,27 @@
+# Render Blueprint — Quick Cart Backend
+# https://render.com/docs/blueprint-spec
+#
+# This file tells Render how to build and run your backend.
+# Set the environment variables (DATABASE_URL, JWT_SECRET, CLIENT_URL)
+# in the Render dashboard — do NOT put secrets here.
+
+services:
+  - type: web
+    name: quick-cart-backend
+    runtime: node
+    rootDir: server
+    # Build: detect DB provider, generate Prisma client, run migrations
+    buildCommand: >
+      npm install &&
+      node prisma/setup.js &&
+      node node_modules/prisma/build/index.js generate --schema prisma/schema.prisma &&
+      node node_modules/prisma/build/index.js migrate deploy --schema prisma/schema.prisma
+    startCommand: node src/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Set these in the Render dashboard (not here):
+      # - key: DATABASE_URL   (your Neon PostgreSQL connection string)
+      # - key: JWT_SECRET     (strong random secret)
+      # - key: CLIENT_URL     (your Vercel frontend URL)
